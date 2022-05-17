@@ -23,6 +23,9 @@
     }
     .logo {
         height: 80px;
+        @include for-size(phone-only){
+            height: 60px;
+        }
     }
 
     .socialIcon {
@@ -107,7 +110,7 @@
         }
 
         .selectedItem {
-            color: var(--white);
+            // color: var(--white);
         }
     }
 }
