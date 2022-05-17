@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from 'react';
+import './App.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar from './modules/shared/components/navbar/navbar';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Digsites from './modules/home/components/home/digsites';
+import Marketplace from './modules/home/components/marketplace/marketplace';
+import Customization from './modules/home/components/customization/customization';
 function App() {
+  const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
+
+  const handleMobileNavbar = (value) => {
+    setIsMobileNavbarOpen(value)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Navbar handleMobileNavbar={handleMobileNavbar} />
+        {
+          !isMobileNavbarOpen &&
+          <>
+            <Routes>
+              <Route path='/' element={<Digsites />} />
+              <Route path='/marketplace' element={<Marketplace />} />
+              <Route path='/customization' element={<Customization    />} />
+            </Routes>
+          </>
+        }
+      </BrowserRouter>
     </div>
   );
 }

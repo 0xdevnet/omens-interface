@@ -1,0 +1,113 @@
+@import '../../../../theme/mixings.scss';
+
+.barContainer {
+    box-shadow: none !important;
+    height: 100px;
+    box-shadow: none;
+    width: 90% !important;
+    margin: auto;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background-color: transparent !important;
+    z-index: 2;
+
+    @include for-size(phone-only) {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    @include for-size(tablet-portrait-up) {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+    .logo {
+        height: 80px;
+    }
+
+    .socialIcon {
+        height: 20px;
+        width: 20px;
+    }
+
+    .buttonContainer {
+        display: flex;
+        flex-direction: column;
+
+        .connectWallet {
+            border-radius: 11px;
+            box-shadow: none;
+            text-transform: none;
+            background: var(--fontColor);
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            padding: 0px 6px;
+
+            span {
+                color: var(--black) !important;
+
+            }
+
+            @include for-size(phone-only) {
+                margin-top: 0 !important;
+            }
+
+            @include for-size(tablet-portrait-up) {
+                margin-top: 0 !important;
+            }
+        }
+    }
+
+    .navItem {
+        font-family: myFirstFont;
+        transition: color 350ms ease 0s;
+        letter-spacing: 1.2px;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 34px;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--white);
+            background-color: transparent !important;
+        }
+    }
+}
+
+.mobileNavbar {
+    z-index: 9999;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: transparent;
+
+    .container {
+        padding: 24px;
+
+        .title {
+            margin: 0px 0px 1rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 24px;
+        }
+
+        .item {
+            display: block;
+            padding: 9px 16px;
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 400;
+            text-decoration: none;
+            color: var(--fontColor);
+            border-radius: 8px;
+            transition: color 350ms ease 0s;
+            border: 1px solid transparent;
+        }
+
+        .selectedItem {
+            color: var(--white);
+        }
+    }
+}

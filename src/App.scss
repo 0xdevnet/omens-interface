@@ -1,0 +1,15 @@
+:root {
+  --fontColor: #E38E74;
+  --white: white;
+  --black: black;
+}
+
+* {
+  color: var(--fontColor);
+}
+
+.App {
+  background: linear-gradient(rgba(125, 14, 14, 0.74) 0%, rgba(70, 17, 0, 0.813802) 19.33%, rgba(41, 20, 0, 0.87) 32.2%, rgba(0, 0, 0, 0.87) 57.25%);
+  // transform: rotate(-180deg);
+  min-height: 100vh;
+}
