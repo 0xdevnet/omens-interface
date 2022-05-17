@@ -7,9 +7,9 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Digsites from './modules/home/components/home/digsites';
 import Marketplace from './modules/home/components/marketplace/marketplace';
 import Customization from './modules/home/components/customization/customization';
+import Digsites from './modules/home/components/digsites/digsites';
 function App() {
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
 

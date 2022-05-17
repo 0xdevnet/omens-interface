@@ -1,4 +1,5 @@
-import mainImage from '../../../../assets/images/mainImage.svg';
+import mainImage from '../../../../assets/images/mainImage.png';
+import omenImage from '../../../../assets/images/OMENS.svg';
 import bottomImage from '../../../../assets/images/bottomImage.svg';
 import Style from './digsites.module.scss';
 
@@ -6,16 +7,22 @@ const Digsites = () => {
     return (
         <>
             <div className={`${Style.mainContainer}  `}>
-                <img className={Style.image} src={mainImage} />
+                <div className={Style.imageContainer}>
+                    <div>
+
+                    <img className={Style.omenImage} src={omenImage} />
+                    </div>
+                    <img className={Style.image} src={mainImage} />
+                </div>
                 <div className='mt-5'>
 
-                    <p>
+                    <p className={Style.paragraph}>
                         BAD OMENS. GOOD OMENS. LIFE IS FULL OF THEM.
                         PERHAPS, YOU COULD CONTROL THESE OMENS?
                         INFLUENCE THE FATE OF YOURSELF? OTHERS? THE WORLD?
 
                     </p>
-                    <p>
+                    <p className={Style.paragraph}>
                         TAKE CONTROL. UNLEASH YOUR INNER BEAST.
                         NO ONE SHOULD BRAVE THE UNDERWORLD ALONE.
                     </p>

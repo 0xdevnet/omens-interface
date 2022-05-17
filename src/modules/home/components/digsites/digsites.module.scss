@@ -4,11 +4,21 @@
     width: 60%;
     margin: auto;
 
-    .image {
-        width: 100%;
+    .imageContainer {
+        position: relative;
+        z-index: 999;
+        .image {
+            width: 100%;
+        }
+
+        .omenImage {
+            width: 100%;
+            position: absolute;
+            z-index: -1;
+        }
     }
 
-    p {
+    .paragraph {
         text-align: center;
         font-style: italic;
         font-weight: 500;
@@ -20,13 +30,14 @@
     @include for-size(phone-only) {
         width: 80%;
 
-        p {
+         .paragraph{
             font-size: 18.1834px;
             line-height: 30px;
-            font-weight: 300;
-            letter-spacing: -0.08em;
+            font-weight: 400;
+            letter-spacing: -0.01em;
         }
     }
+
     @include for-size(tablet-portrait-up) {
         width: 75%;
 
@@ -75,6 +86,7 @@
             }
         }
     }
+
     @include for-size(tablet-portrait-up) {
         width: 98%;
         margin-top: 6rem;
