@@ -10,7 +10,7 @@ const Digsites = () => {
                 <div className={Style.imageContainer}>
                     <div>
 
-                    <img className={Style.omenImage} src={omenImage} />
+                        <img className={Style.omenImage} src={omenImage} />
                     </div>
                     <img className={Style.image} src={mainImage} />
                 </div>
@@ -28,6 +28,9 @@ const Digsites = () => {
                     </p>
                 </div>
 
+
+            </div>
+            <div className={Style.middleContainer}>
 
             </div>
             <div className={`${Style.bottomContainer} `}>
