@@ -18,6 +18,7 @@ const pagesList = [
     { title: 'DIGSITES', acitveItem: true, route: '/' },
     { title: 'CUSTOMIZATION', acitveItem: false, route: '/customization' },
     { title: 'MARKETPLACE', acitveItem: false, route: '/marketplace' },
+    { title: 'TICKETS', acitveItem: false, route: '/tickets' },
 ];
 
 const Navbar = ({ handleMobileNavbar }) => {
@@ -31,7 +32,7 @@ const Navbar = ({ handleMobileNavbar }) => {
 
     useEffect(() => {
         setIsMenuOpen(false);
-        handleMobileNavbar(false);
+        handleMobileNavbar(false, pathname);
     }, [pathname]);
 
     const handleRouting = (index) => {
@@ -45,7 +46,7 @@ const Navbar = ({ handleMobileNavbar }) => {
 
     const handleOpenNavMenu = () => {
         setIsMenuOpen((prev) => !prev);
-        handleMobileNavbar(!isMenueOpen);
+        handleMobileNavbar(!isMenueOpen, pathname);
     }
 
 

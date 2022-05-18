@@ -1,0 +1,176 @@
+@import "../../../../theme/mixings.scss";
+
+.mainContainer {
+    width: 43%;
+    margin: auto;
+    background: rgba(33, 33, 33, 0.55);
+    border-radius: 49.2208px;
+    padding: 30px;
+
+    .header {
+        .title {
+            font-style: normal;
+            font-weight: 800;
+            font-size: 70.3225px;
+            line-height: 56px;
+            align-items: center;
+            text-align: center;
+            letter-spacing: -0.05em;
+    
+            color: #E38E74;
+    
+            text-shadow: 0px 4.37519px 4.37519px rgba(0, 0, 0, 0.5);
+        }
+    }
+    
+    .body {
+        margin: 50px 0px;
+        padding: 0px 9%;
+        .paragraph {
+            font-style: normal;
+            font-weight: 800;
+            font-size: 35px;
+            line-height: 87.1%;
+
+            align-items: center;
+            text-align: center;
+            letter-spacing: -0.05em;
+
+            color: #FFFFFF;
+
+            text-shadow: 0px 4.37519px 4.37519px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+    }
+
+    .footer {
+        padding: 0px 15%;
+        .btn1 {
+            width: 100%;
+            padding: 20px 15%;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 49.2208px;
+
+            font-style: italic;
+            font-weight: 800;
+            font-size: 35px;
+            line-height: 33px;
+            text-align: center;
+            letter-spacing: -0.045em;
+
+            color: #E38E74;
+
+            text-shadow: 0px 4.37519px 4.37519px rgba(0, 0, 0, 0.5);
+        }
+    }
+    
+
+    @include for-size(phone-only) {
+        width: 80%;
+
+        .header {
+            .title {
+                font-weight: 800;
+                font-size: 30.3225px;
+                line-height: 25px;
+                letter-spacing: -0.05em;
+            }
+        }
+        .body {
+            margin: 20px 0px;
+            padding: 0;
+            .paragraph {
+                font-weight: 600;
+                font-size: 22px;
+                line-height: 87.1%;
+                letter-spacing: -0.05em;
+                margin-bottom: 10px;
+            }
+        }
+
+        .footer {
+            padding: 0px 5%;
+            .btn1 {
+                padding: 10px;
+    
+                font-weight: 800;
+                font-size: 12px;
+                line-height: 14px;
+                letter-spacing: -0.045em;
+            }
+        }
+    }
+
+    @include for-size(tablet-portrait-up) {
+        width: 75%;
+
+        .header {
+            .title {
+                font-weight: 800;
+                font-size: 42.3225px;
+                line-height: 35px;
+                letter-spacing: -0.05em;
+            }
+        }
+        .body {
+            margin: 20px 0px;
+            padding: 0;
+            .paragraph {
+                font-weight: 600;
+                font-size: 22px;
+                line-height: 87.1%;
+                letter-spacing: -0.05em;
+                margin-bottom: 20px;
+            }
+        }
+
+        .footer {
+            padding: 0px 5%;
+            .btn1 {
+                padding: 10px 9%;
+    
+                font-weight: 800;
+                font-size: 26px;
+                line-height: 21px;
+                letter-spacing: -0.045em;
+            }
+        }
+    }
+
+    @include for-size(ipad-pro) {
+        width: 75%;
+
+        .header {
+            .title {
+                font-weight: 800;
+                font-size: 65.3225px;
+                line-height: 60px;
+                letter-spacing: -0.05em;
+            }
+        }
+    }
+
+    @include for-size(desktop-small) {
+        width: 60%;
+
+        .header {
+            .title {
+                font-weight: 800;
+                font-size: 55.3225px;
+                line-height: 42px;
+                letter-spacing: -0.05em;
+            }
+        }
+    }
+}
+
+.video {
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background: transparent;
+}

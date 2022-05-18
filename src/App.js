@@ -10,14 +10,17 @@ import {
 import Marketplace from './modules/home/components/marketplace/marketplace';
 import Customization from './modules/home/components/customization/customization';
 import Digsites from './modules/home/components/digsites/digsites';
+import Tickets from './modules/home/components/tickets/tickets';
 function App() {
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
+  const [sPathName, setPathName] = useState('/');
 
-  const handleMobileNavbar = (value) => {
-    setIsMobileNavbarOpen(value)
+  const handleMobileNavbar = (value, pathname) => {
+    setIsMobileNavbarOpen(value);
+    setPathName(pathname);
   }
   return (
-    <div className="App">
+    <div className={sPathName.includes('/tickets') ? "App" : "App-Back"}>
       <BrowserRouter>
         <Navbar handleMobileNavbar={handleMobileNavbar} />
         {
@@ -27,6 +30,7 @@ function App() {
               <Route path='/' element={<Digsites />} />
               <Route path='/marketplace' element={<Marketplace />} />
               <Route path='/customization' element={<Customization    />} />
+              <Route path='/tickets' element={<Tickets/>} />
             </Routes>
           </>
         }
