@@ -11,6 +11,7 @@ import Marketplace from './modules/home/components/marketplace/marketplace';
 import Customization from './modules/home/components/customization/customization';
 import Digsites from './modules/home/components/digsites/digsites';
 import Tickets from './modules/home/components/tickets/tickets';
+import backgroundVideo from './assets/videos/omensbg_1.mp4';
 function App() {
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
   const [sPathName, setPathName] = useState('/');
@@ -20,14 +21,17 @@ function App() {
     setPathName(pathname);
   }
   return (
-    <div className={sPathName.includes('/tickets') ? "App" : "App-Back"}>
+    <div className={"App"}>
       <BrowserRouter>
         <Navbar handleMobileNavbar={handleMobileNavbar} />
+        <video autoPlay loop muted id='video' className={"video"}>
+            <source src={backgroundVideo} type='video/mp4'/>
+        </video>
         {
           !isMobileNavbarOpen &&
           <>
             <Routes>
-              <Route path='/' element={<Digsites />} />
+              <Route path='/' element={<Marketplace />} />
               <Route path='/marketplace' element={<Marketplace />} />
               <Route path='/customization' element={<Customization    />} />
               <Route path='/tickets' element={<Tickets/>} />
