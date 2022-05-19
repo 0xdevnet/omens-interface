@@ -26,7 +26,7 @@ function App() {
         {!isMobileNavbarOpen && (
           <>
             <Routes>
-              <Route path="/" element={<Marketplace />} />
+              <Route path="/" element={<Digsites />} />
               <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/customization" element={<Customization />} />
               <Route path="/underworld" element={<Tickets />} />

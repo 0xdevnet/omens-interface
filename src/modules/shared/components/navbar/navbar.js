@@ -22,7 +22,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const pagesList = [
-  { title: "DIGSITES", acitveItem: true, route: "/digsites" },
+  { title: "DIGSITES", acitveItem: true, route: "/" },
   { title: "CUSTOMIZATION", acitveItem: false, route: "/customization" },
   { title: "MARKETPLACE", acitveItem: false, route: "/marketplace" },
   { title: "UNDERWORLD", acitveItem: false, route: "/underworld" },
