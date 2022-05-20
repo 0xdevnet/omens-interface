@@ -6,7 +6,6 @@ import Style from "./digsites.module.scss";
 const Digsites = () => {
   return (
     <>
-      
       <div className={`${Style.bottomContainer} `}>
         <div className={Style.textContainer}>
           <p className={Style.text}>
