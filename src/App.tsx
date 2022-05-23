@@ -1,105 +1,109 @@
+import "./App.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useMemo, useState } from "react";
+import * as anchor from "@project-serum/anchor";
+import { DEFAULT_TIMEOUT } from "./connection";
+import { clusterApiUrl } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import {
+  getPhantomWallet,
+  getSlopeWallet,
+  getSolflareWallet,
+  getSolletWallet,
+  getSolletExtensionWallet,
+} from "@solana/wallet-adapter-wallets";
+
 import {
   ConnectionProvider,
   WalletProvider,
-  useWallet,
 } from "@solana/wallet-adapter-react";
-import {
-  WalletModalProvider,
-  WalletMultiButton,
-} from "@solana/wallet-adapter-react-ui";
-import {
-  GlowWalletAdapter,
-  LedgerWalletAdapter,
-  PhantomWalletAdapter,
-  SlopeWalletAdapter,
-  SolflareWalletAdapter,
-  SolletExtensionWalletAdapter,
-  SolletWalletAdapter,
-  TorusWalletAdapter,
-} from "@solana/wallet-adapter-wallets";
-import { clusterApiUrl } from "@solana/web3.js";
-import { FC, ReactNode, useMemo, useState } from "react";
-import "@solana/wallet-adapter-react-ui/styles.css";
+import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 
-import "./App.scss";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Navbar from "./modules/shared/components/navbar/navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./modules/shared/components/navbar/navbar";
 import Marketplace from "./modules/home/components/marketplace/marketplace";
 import Customization from "./modules/home/components/customization/customization";
 import Digsites from "./modules/home/components/digsites/digsites";
 import Tickets from "./modules/home/components/tickets/tickets";
+
 import backgroundVideo from "./assets/videos/omensbg_1.mp4";
 
-const App: FC = () => {
+const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
+  try {
+    const candyMachineId = new anchor.web3.PublicKey(
+      process.env.REACT_APP_CANDY_MACHINE_ID!
+    );
+
+    return candyMachineId;
+  } catch (e) {
+    console.log("Failed to construct CandyMachineId", e);
+    return undefined;
+  }
+};
+
+const candyMachineId = getCandyMachineId();
+const network = process.env.REACT_APP_SOLANA_NETWORK as WalletAdapterNetwork;
+const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
+const connection = new anchor.web3.Connection(
+  rpcHost ? rpcHost : anchor.web3.clusterApiUrl("devnet")
+);
+
+const App = () => {
+  const endpoint = useMemo(() => clusterApiUrl(network), []);
+
+  const wallets = useMemo(
+    () => [
+      getPhantomWallet(),
+      getSolflareWallet(),
+      getSlopeWallet(),
+      getSolletWallet({ network }),
+      getSolletExtensionWallet({ network }),
+    ],
+    []
+  );
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
   const [sPathName, setPathName] = useState("/");
 
-  const handleMobileNavbar = (value, pathname) => {
+  const handleMobileNavbar = (value: boolean, pathname: string) => {
     setIsMobileNavbarOpen(value);
     setPathName(pathname);
   };
 
   return (
-    <Context>
-      <BrowserRouter>
-        <Navbar handleMobileNavbar={handleMobileNavbar} />
-        <video autoPlay loop muted id="video" className={"video"}>
-          <source src={backgroundVideo} type="video/mp4" />
-        </video>
-        {!isMobileNavbarOpen && (
-          <>
-            <Routes>
-              <Route path="/" element={<Digsites />} />
-              <Route path="/marketplace" element={<Marketplace />} />
-              <Route path="/customization" element={<Customization />} />
-              <Route path="/underworld" element={<Tickets />} />
-            </Routes>
-          </>
-        )}
-      </BrowserRouter>
-    </Context>
-  );
-};
-
-export default App;
-
-const Context: FC<{ children: ReactNode }> = ({ children }) => {
-  const network = WalletAdapterNetwork.Mainnet;
-  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-
-  const wallets = useMemo(
-    () => [
-      new LedgerWalletAdapter(),
-      new PhantomWalletAdapter(),
-      new GlowWalletAdapter(),
-      new SlopeWalletAdapter(),
-      new SolletExtensionWalletAdapter(),
-      new SolletWalletAdapter(),
-      new SolflareWalletAdapter({ network }),
-      new TorusWalletAdapter(),
-    ],
-    [network]
-  );
-
-  return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>
-        <WalletModalProvider>{children}</WalletModalProvider>
+        <WalletDialogProvider>
+          <BrowserRouter>
+            <Navbar handleMobileNavbar={handleMobileNavbar} />
+            <video autoPlay loop muted id="video" className={"video"}>
+              <source src={backgroundVideo} type="video/mp4" />
+            </video>
+            {!isMobileNavbarOpen && (
+              <>
+                <Routes>
+                  <Route path="/" element={<Digsites />} />
+                  <Route path="/marketplace" element={<Marketplace />} />
+                  <Route path="/customization" element={<Customization />} />
+                  <Route
+                    path="/underworld"
+                    element={
+                      <Tickets
+                        candyMachineId={candyMachineId}
+                        connection={connection}
+                        txTimeout={DEFAULT_TIMEOUT}
+                        rpcHost={rpcHost}
+                        network={network}
+                      />
+                    }
+                  />
+                </Routes>
+              </>
+            )}
+          </BrowserRouter>
+        </WalletDialogProvider>
       </WalletProvider>
     </ConnectionProvider>
   );
 };
 
-const Content: FC = () => {
-  const { publicKey } = useWallet();
-
-  return (
-    <div className={publicKey ? "unlogged" : "logged"}>
-      {publicKey ? "" : <h1>Please log in to access the platform</h1>}
-      <WalletMultiButton />
-      {publicKey ? "" : ""}
-    </div>
-  );
-};
+export default App;

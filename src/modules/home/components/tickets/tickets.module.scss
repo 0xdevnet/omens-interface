@@ -17,15 +17,22 @@
             text-align: center;
             letter-spacing: -0.05em;
     
-            color: #E38E74;
+            color: #970000;
     
             text-shadow: 0px 4.37519px 4.37519px rgba(0, 0, 0, 0.5);
         }
     }
     
     .body {
-        margin: 50px 0px;
+        margin: 50px 0px 0px 0px;
         padding: 0px 9%;
+
+        .bodyImg {
+            text-align: center;
+        }
+        .bodyImg img {
+            width: 60%;
+        }
         .paragraph {
             font-style: normal;
             font-weight: 800;
@@ -40,6 +47,18 @@
 
             text-shadow: 0px 4.37519px 4.37519px rgba(0, 0, 0, 0.5);
             margin-bottom: 30px;
+        }
+
+        .paragraph1 {
+            font-family: 'Work Sans';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 19px;
+            text-align: center;
+            letter-spacing: -0.045em;
+
+            color: #D8D8D8;
         }
     }
 
@@ -61,6 +80,31 @@
             color: #E38E74;
 
             text-shadow: 0px 4.37519px 4.37519px rgba(0, 0, 0, 0.5);
+        }
+
+        .gridItem {
+            text-align: center;
+
+            .typography {
+                font-family: 'Work Sans';
+                font-style: italic;
+                font-weight: 700;
+                font-size: 20.2762px;
+                line-height: 24px;
+                text-align: center;
+                letter-spacing: -0.045em;
+
+                color: #D8D8D8;
+            }
+
+            .Burning1901 {
+                top: -20px;
+                position: relative;
+            }
+
+            span {
+                color: #C51F15 !important;
+            }
         }
     }
     

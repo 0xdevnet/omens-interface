@@ -15,11 +15,11 @@ import { ReactComponent as DiscordIcon } from "../../../../assets/images/Discord
 import { ReactComponent as VectorIcon } from "../../../../assets/images/Vector.svg";
 import { ReactComponent as CrossIcon } from "../../../../assets/images/cross.svg";
 
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useWallet } from "@solana/wallet-adapter-react";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { WalletMultiButton } from "@solana/wallet-adapter-material-ui";
 
 const pagesList = [
   { title: "DIGSITES", acitveItem: true, route: "/" },
@@ -29,7 +29,12 @@ const pagesList = [
   { title: "JOURNEY", acitveItem: false, route: "/journey" },
 ];
 
-const Navbar = ({ handleMobileNavbar }) => {
+const Navbar = ({
+  handleMobileNavbar,
+}: {
+  handleMobileNavbar: (value: boolean, pathname: string) => void;
+}) => {
+  // const Navbar = ({ handleMobileNavbar:(boolean, string) }) => {
   const [isMenueOpen, setIsMenuOpen] = useState(false);
   const [pages, setPages] = useState([...pagesList]);
   const [currentActive, setCurrentActive] = useState(0);
@@ -44,7 +49,7 @@ const Navbar = ({ handleMobileNavbar }) => {
     handleMobileNavbar(false, pathname);
   }, [pathname]);
 
-  const handleRouting = (index) => {
+  const handleRouting = (index: number) => {
     let _pages = [...pages];
     _pages[currentActive].acitveItem = false;
     _pages[currentActive].acitveItem = true;
@@ -95,10 +100,15 @@ const Navbar = ({ handleMobileNavbar }) => {
             </Box>
 
             <Box className={Style.buttonContainer} sx={{ flexGrow: 0 }}>
-              <div className="d-flex justify-content-center">
-                <DiscordIcon className={`mt-2 ${Style.socialIcon} `} />
-                <TwitterIcon className={`mt-2 ${Style.socialIcon} `} />
-                <WalletMultiButton className={`${Style.connectWallet} `}>
+              <div
+                className="d-flex justify-content-center"
+                style={{ alignItems: "center" }}
+              >
+                <DiscordIcon className={`${Style.socialIcon} `} />
+                <TwitterIcon className={`${Style.socialIcon} `} />
+
+                <WalletMultiButton className={`${Style.connectWallet} `} />
+                {/* <WalletMultiButton className={`${Style.connectWallet} `}>
                   {publicKey ? (
                     ""
                   ) : (
@@ -109,7 +119,7 @@ const Navbar = ({ handleMobileNavbar }) => {
                     <br />
                     WALLET
                   </span>
-                </WalletMultiButton>
+                </WalletMultiButton> */}
               </div>
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
