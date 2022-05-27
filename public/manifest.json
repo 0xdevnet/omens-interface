@@ -1,20 +1,20 @@
 {
-  "short_name": "Omens Main",
-  "name": "omens interface",
+  "short_name": "OMENS",
+  "name": "OMENS ART",
   "icons": [
     {
-      "src": "favicon.svg",
+      "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/svg"
+      "type": "image/ico"
     },
     {
-      "src": "logo192.svg",
+      "src": "favicon.ico",
       "type": "image/svg",
-      "sizes": "192x192"
+      "sizes": "192xico"
     },
     {
-      "src": "logo512.svg",
-      "type": "image/svg",
+      "src": "favicon.ico",
+      "type": "image/ico",
       "sizes": "512x512"
     }
   ],

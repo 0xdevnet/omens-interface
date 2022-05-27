@@ -1,18 +1,18 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import * as anchor from '@project-serum/anchor';
+import { useCallback, useEffect, useMemo, useState } from "react";
+import * as anchor from "@project-serum/anchor";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { Grid, Typography, Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Grid, Typography, Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 import {
   Commitment,
   Connection,
   PublicKey,
   Transaction,
-} from '@solana/web3.js';
-import { useWallet } from '@solana/wallet-adapter-react';
+} from "@solana/web3.js";
+import { useWallet } from "@solana/wallet-adapter-react";
 // import { WalletDialogButton } from '@solana/wallet-adapter-material-ui';
 import {
   awaitTransactionSignatureConfirmation,
@@ -23,12 +23,12 @@ import {
   getCollectionPDA,
   mintOneToken,
   SetupState,
-} from './candy-machine';
-import { AlertState, formatNumber, getAtaForMint, toDate } from './utils';
-import { MintButton } from './MintButton';
-import { GatewayProvider } from '@civic/solana-gateway-react';
-import { sendTransaction } from '../../../../connection';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+} from "./candy-machine";
+import { AlertState, formatNumber, getAtaForMint, toDate } from "./utils";
+import { MintButton } from "./MintButton";
+import { GatewayProvider } from "@civic/solana-gateway-react";
+import { sendTransaction } from "../../../../connection";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 
 import backgroundVideo from "../../../../assets/videos/ticketreal.mp4";
 
@@ -60,7 +60,7 @@ const Tickets = (props: TicketsProps) => {
   const [candyMachine, setCandyMachine] = useState<CandyMachineAccount>();
   const [alertState, setAlertState] = useState<AlertState>({
     open: false,
-    message: '',
+    message: "",
     severity: undefined,
   });
   const [isActive, setIsActive] = useState(false);
@@ -94,7 +94,7 @@ const Tickets = (props: TicketsProps) => {
   }, [wallet]);
 
   const refreshCandyMachineState = useCallback(
-    async (commitment: Commitment = 'confirmed') => {
+    async (commitment: Commitment = "confirmed") => {
       if (!anchorWallet) {
         return;
       }
@@ -106,7 +106,7 @@ const Tickets = (props: TicketsProps) => {
           const cndy = await getCandyMachineState(
             anchorWallet,
             props.candyMachineId,
-            connection,
+            connection
           );
           let active =
             cndy?.state.goLiveDate?.toNumber() < new Date().getTime() / 1000;
@@ -140,7 +140,7 @@ const Tickets = (props: TicketsProps) => {
             }
             // retrieves the whitelist token
             const mint = new anchor.web3.PublicKey(
-              cndy.state.whitelistMintSettings.mint,
+              cndy.state.whitelistMintSettings.mint
             );
             const token = (
               await getAtaForMint(mint, anchorWallet.publicKey)
@@ -162,7 +162,7 @@ const Tickets = (props: TicketsProps) => {
                 active = false;
               }
               console.log(
-                'There was a problem fetching whitelist token balance',
+                "There was a problem fetching whitelist token balance"
               );
               console.log(e);
             }
@@ -187,12 +187,12 @@ const Tickets = (props: TicketsProps) => {
               setIsValidBalance(false);
               active = false;
               // no whitelist user, no mint
-              console.log('There was a problem fetching SPL token balance');
+              console.log("There was a problem fetching SPL token balance");
               console.log(e);
             }
           } else {
             const balance = new anchor.BN(
-              await connection.getBalance(anchorWallet.publicKey),
+              await connection.getBalance(anchorWallet.publicKey)
             );
             const valid = balance.gte(userPrice);
             setIsValidBalance(valid);
@@ -213,7 +213,7 @@ const Tickets = (props: TicketsProps) => {
           if (cndy?.state.endSettings?.endSettingType.amount) {
             let limit = Math.min(
               cndy.state.endSettings.number.toNumber(),
-              cndy.state.itemsAvailable,
+              cndy.state.itemsAvailable
             );
             if (cndy.state.itemsRedeemed < limit) {
               setItemsRemaining(limit - cndy.state.itemsRedeemed);
@@ -231,7 +231,7 @@ const Tickets = (props: TicketsProps) => {
 
           const [collectionPDA] = await getCollectionPDA(props.candyMachineId);
           const collectionPDAAccount = await connection.getAccountInfo(
-            collectionPDA,
+            collectionPDA
           );
 
           setIsActive((cndy.state.isActive = active));
@@ -256,16 +256,16 @@ const Tickets = (props: TicketsProps) => {
               setAlertState({
                 open: true,
                 message: `Couldn't fetch candy machine state from candy machine with address: ${props.candyMachineId}, using rpc: ${props.rpcHost}! You probably typed the REACT_APP_CANDY_MACHINE_ID value in wrong in your .env file, or you are using the wrong RPC!`,
-                severity: 'error',
+                severity: "error",
                 hideDuration: null,
               });
             } else if (
-              e.message.startsWith('failed to get info about account')
+              e.message.startsWith("failed to get info about account")
             ) {
               setAlertState({
                 open: true,
                 message: `Couldn't fetch candy machine state with rpc: ${props.rpcHost}! This probably means you have an issue with the REACT_APP_SOLANA_RPC_HOST value in your .env file, or you are not using a custom RPC!`,
-                severity: 'error',
+                severity: "error",
                 hideDuration: null,
               });
             }
@@ -273,7 +273,7 @@ const Tickets = (props: TicketsProps) => {
             setAlertState({
               open: true,
               message: `${e}`,
-              severity: 'error',
+              severity: "error",
               hideDuration: null,
             });
           }
@@ -283,32 +283,32 @@ const Tickets = (props: TicketsProps) => {
         setAlertState({
           open: true,
           message: `Your REACT_APP_CANDY_MACHINE_ID value in the .env file doesn't look right! Make sure you enter it in as plain base-58 address!`,
-          severity: 'error',
+          severity: "error",
           hideDuration: null,
         });
       }
     },
-    [anchorWallet, props.candyMachineId, props.rpcHost],
+    [anchorWallet, props.candyMachineId, props.rpcHost]
   );
 
   const onMint = async (
     beforeTransactions: Transaction[] = [],
-    afterTransactions: Transaction[] = [],
+    afterTransactions: Transaction[] = []
   ) => {
     try {
       setIsUserMinting(true);
-      document.getElementById('#identity')?.click();
+      document.getElementById("#identity")?.click();
       if (wallet.connected && candyMachine?.program && wallet.publicKey) {
         let setupMint: SetupState | undefined;
         if (needTxnSplit && setupTxn === undefined) {
           setAlertState({
             open: true,
-            message: 'Please sign account setup transaction',
-            severity: 'info',
+            message: "Please sign account setup transaction",
+            severity: "info",
           });
           setupMint = await createAccountsForMint(
             candyMachine,
-            wallet.publicKey,
+            wallet.publicKey
           );
           let status: any = { err: true };
           if (setupMint.transaction) {
@@ -316,7 +316,7 @@ const Tickets = (props: TicketsProps) => {
               setupMint.transaction,
               props.txTimeout,
               props.connection,
-              true,
+              true
             );
           }
           if (status && !status.err) {
@@ -324,14 +324,14 @@ const Tickets = (props: TicketsProps) => {
             setAlertState({
               open: true,
               message:
-                'Setup transaction succeeded! Please sign minting transaction',
-              severity: 'info',
+                "Setup transaction succeeded! Please sign minting transaction",
+              severity: "info",
             });
           } else {
             setAlertState({
               open: true,
-              message: 'Mint failed! Please try again!',
-              severity: 'error',
+              message: "Mint failed! Please try again!",
+              severity: "error",
             });
             setIsUserMinting(false);
             return;
@@ -339,8 +339,8 @@ const Tickets = (props: TicketsProps) => {
         } else {
           setAlertState({
             open: true,
-            message: 'Please sign minting transaction',
-            severity: 'info',
+            message: "Please sign minting transaction",
+            severity: "info",
           });
         }
 
@@ -349,7 +349,7 @@ const Tickets = (props: TicketsProps) => {
           wallet.publicKey,
           beforeTransactions,
           afterTransactions,
-          setupMint ?? setupTxn,
+          setupMint ?? setupTxn
         );
 
         let status: any = { err: true };
@@ -359,15 +359,15 @@ const Tickets = (props: TicketsProps) => {
             mintResult.mintTxId,
             props.txTimeout,
             props.connection,
-            true,
+            true
           );
 
           metadataStatus =
             await candyMachine.program.provider.connection.getAccountInfo(
               mintResult.metadataKey,
-              'processed',
+              "processed"
             );
-          console.log('Metadata status: ', !!metadataStatus);
+          console.log("Metadata status: ", !!metadataStatus);
         }
 
         if (status && !status.err && metadataStatus) {
@@ -380,38 +380,38 @@ const Tickets = (props: TicketsProps) => {
           setSetupTxn(undefined);
           setAlertState({
             open: true,
-            message: 'Congratulations! Mint succeeded!',
-            severity: 'success',
+            message: "Congratulations! Mint succeeded!",
+            severity: "success",
             hideDuration: 7000,
           });
-          refreshCandyMachineState('processed');
+          refreshCandyMachineState("processed");
         } else if (status && !status.err) {
           setAlertState({
             open: true,
             message:
-              'Mint likely failed! Anti-bot SOL 0.01 fee potentially charged! Check the explorer to confirm the mint failed and if so, make sure you are eligible to mint before trying again.',
-            severity: 'error',
+              "Mint likely failed! Anti-bot SOL 0.01 fee potentially charged! Check the explorer to confirm the mint failed and if so, make sure you are eligible to mint before trying again.",
+            severity: "error",
             hideDuration: 8000,
           });
           refreshCandyMachineState();
         } else {
           setAlertState({
             open: true,
-            message: 'Mint failed! Please try again!',
-            severity: 'error',
+            message: "Mint failed! Please try again!",
+            severity: "error",
           });
           refreshCandyMachineState();
         }
       }
     } catch (error: any) {
-      let message = error.msg || 'Minting failed! Please try again!';
+      let message = error.msg || "Minting failed! Please try again!";
       if (!error.msg) {
         if (!error.message) {
-          message = 'Transaction timeout! Please try again.';
-        } else if (error.message.indexOf('0x137')) {
+          message = "Transaction timeout! Please try again.";
+        } else if (error.message.indexOf("0x137")) {
           console.log(error);
           message = `SOLD OUT!`;
-        } else if (error.message.indexOf('0x135')) {
+        } else if (error.message.indexOf("0x135")) {
           message = `Insufficient funds to mint. Please fund your wallet.`;
         }
       } else {
@@ -427,7 +427,7 @@ const Tickets = (props: TicketsProps) => {
       setAlertState({
         open: true,
         message,
-        severity: 'error',
+        severity: "error",
       });
       // updates the candy machine state to reflect the latest
       // information on chain
@@ -482,9 +482,7 @@ const Tickets = (props: TicketsProps) => {
     <>
       <div className={`${Style.mainContainer}  `}>
         <div className={Style.header}>
-          <p className={Style.title}>
-            RECIEVE YOUR TICKET TO THE UNDERWORLD
-          </p>
+          <p className={Style.title}>RECIEVE YOUR TICKET TO THE UNDERWORLD</p>
         </div>
 
         <div className={Style.body}>
@@ -494,10 +492,16 @@ const Tickets = (props: TicketsProps) => {
             </video>
           </div>
 
-          <div style={{marginTop: "20px", padding: "30px"}}>
+          <div style={{ marginTop: "20px", padding: "30px" }}>
             <p className={Style.paragraph1}>
-              the underworld awaits, and we don’t just let anyone in. every invite to the underworld is handed out individually by the team and our community of omens
-              <br/><br/>“The path to paradise begins in hell.”<br/><br/>- Dante
+              the underworld awaits, and we don’t just let anyone in. every
+              invite to the underworld is handed out individually by the team
+              and our community of omens
+              <br />
+              <br />
+              “The path to paradise begins in hell.”
+              <br />
+              <br />- Dante
             </p>
           </div>
         </div>
@@ -505,8 +509,8 @@ const Tickets = (props: TicketsProps) => {
         <div className={Style.footer}>
           {!wallet.connected ? (
             <></>
-            // <ConnectButton>Connect Wallet</ConnectButton>
           ) : (
+            // <ConnectButton>Connect Wallet</ConnectButton>
             <>
               {candyMachine && (
                 <Grid
@@ -516,17 +520,24 @@ const Tickets = (props: TicketsProps) => {
                   wrap="nowrap"
                 >
                   <Grid item xs={4} className={Style.gridItem}>
-                    <Typography className={Style.typography} style={{textDecorationLine: "underline", marginTop: "20px"}}>
+                    <Typography
+                      className={Style.typography}
+                      style={{
+                        textDecorationLine: "underline",
+                        marginTop: "20px",
+                      }}
+                    >
                       {isWhitelistUser && discountPrice
-                        ? 'DISCOUNT COST'
-                        : 'COST'}
+                        ? "DISCOUNT COST"
+                        : "COST"}
                     </Typography>
-                    <Typography className={Style.typography} >
-                      {isWhitelistUser && discountPrice
+                    <Typography className={Style.typography}>
+                      {/* {isWhitelistUser && discountPrice
                         ? `◎ ${formatNumber.asNumber(discountPrice)}`
                         : `◎ ${formatNumber.asNumber(
                             candyMachine.state.price,
-                          )}`}
+                          )}`} */}
+                      Your Soul
                     </Typography>
                   </Grid>
 
@@ -549,29 +560,32 @@ const Tickets = (props: TicketsProps) => {
                           }
                           clusterUrl={
                             props.network === WalletAdapterNetwork.Devnet
-                              ? 'https://api.devnet.solana.com'
+                              ? "https://api.devnet.solana.com"
                               : rpcUrl
                           }
-                          handleTransaction={async (transaction: Transaction) => {
+                          handleTransaction={async (
+                            transaction: Transaction
+                          ) => {
                             setIsUserMinting(true);
-                            const userMustSign = transaction.signatures.find(sig =>
-                              sig.publicKey.equals(wallet.publicKey!),
+                            const userMustSign = transaction.signatures.find(
+                              (sig) => sig.publicKey.equals(wallet.publicKey!)
                             );
                             if (userMustSign) {
                               setAlertState({
                                 open: true,
-                                message: 'Please sign one-time Civic Pass issuance',
-                                severity: 'info',
+                                message:
+                                  "Please sign one-time Civic Pass issuance",
+                                severity: "info",
                               });
                               try {
                                 transaction = await wallet.signTransaction!(
-                                  transaction,
+                                  transaction
                                 );
                               } catch (e) {
                                 setAlertState({
                                   open: true,
-                                  message: 'User cancelled signing',
-                                  severity: 'error',
+                                  message: "User cancelled signing",
+                                  severity: "error",
                                 });
                                 // setTimeout(() => window.location.reload(), 2000);
                                 setIsUserMinting(false);
@@ -580,8 +594,8 @@ const Tickets = (props: TicketsProps) => {
                             } else {
                               setAlertState({
                                 open: true,
-                                message: 'Refreshing Civic Pass',
-                                severity: 'info',
+                                message: "Refreshing Civic Pass",
+                                severity: "info",
                               });
                             }
                             try {
@@ -591,19 +605,19 @@ const Tickets = (props: TicketsProps) => {
                                 transaction,
                                 [],
                                 true,
-                                'confirmed',
+                                "confirmed"
                               );
                               setAlertState({
                                 open: true,
-                                message: 'Please sign minting',
-                                severity: 'info',
+                                message: "Please sign minting",
+                                severity: "info",
                               });
                             } catch (e) {
                               setAlertState({
                                 open: true,
                                 message:
-                                  'Solana dropped the transaction, please try again',
-                                severity: 'warning',
+                                  "Solana dropped the transaction, please try again",
+                                severity: "warning",
                               });
                               console.error(e);
                               // setTimeout(() => window.location.reload(), 2000);
@@ -618,7 +632,7 @@ const Tickets = (props: TicketsProps) => {
                           <MintButton
                             candyMachine={candyMachine}
                             isMinting={isUserMinting}
-                            setIsMinting={val => setIsUserMinting(val)}
+                            setIsMinting={(val) => setIsUserMinting(val)}
                             onMint={onMint}
                             isActive={
                               isActive ||
@@ -630,7 +644,7 @@ const Tickets = (props: TicketsProps) => {
                         <MintButton
                           candyMachine={candyMachine}
                           isMinting={isUserMinting}
-                          setIsMinting={val => setIsUserMinting(val)}
+                          setIsMinting={(val) => setIsUserMinting(val)}
                           onMint={onMint}
                           isActive={
                             isActive ||
@@ -643,10 +657,16 @@ const Tickets = (props: TicketsProps) => {
                   </Grid>
 
                   <Grid item xs={4} className={Style.gridItem}>
-                    <Typography className={Style.typography} style={{textDecorationLine: "underline", marginTop: "20px"}}>
+                    <Typography
+                      className={Style.typography}
+                      style={{
+                        textDecorationLine: "underline",
+                        marginTop: "20px",
+                      }}
+                    >
                       REMAINING
                     </Typography>
-                    <Typography className={Style.typography} >
+                    <Typography className={Style.typography}>
                       {`${itemsRemaining}`}
                     </Typography>
                   </Grid>
@@ -659,7 +679,9 @@ const Tickets = (props: TicketsProps) => {
         <Snackbar
           open={alertState.open}
           autoHideDuration={
-            alertState.hideDuration === undefined ? 6000 : alertState.hideDuration
+            alertState.hideDuration === undefined
+              ? 6000
+              : alertState.hideDuration
           }
           onClose={() => setAlertState({ ...alertState, open: false })}
         >
@@ -670,7 +692,6 @@ const Tickets = (props: TicketsProps) => {
             {alertState.message}
           </Alert>
         </Snackbar>
-
       </div>
     </>
   );

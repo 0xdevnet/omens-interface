@@ -1,10 +1,18 @@
 import * as React from "react";
 
-import { Grid, AppBar, Box, Toolbar, IconButton, Container, Button } from '@material-ui/core';
+import {
+  Grid,
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Container,
+  Button,
+} from "@material-ui/core";
 import { Menu as MenuIcon } from "@material-ui/icons";
 
 import Style from "./navbar.module.scss";
-import logo from "../../../../assets/images/logo.svg";
+import logo from "../../../../assets/images/LOGOnew.svg";
 import { ReactComponent as TwitterIcon } from "../../../../assets/images/Twitter.svg";
 import { ReactComponent as DiscordIcon } from "../../../../assets/images/Discord.svg";
 // import { ReactComponent as VectorIcon } from "../../../../assets/images/Vector.svg";

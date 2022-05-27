@@ -1,11 +1,17 @@
 @font-face {
   font-family: myFirstFont;
-  src: url("./assets/bevietnam/BeVietnamPro-Regular.ttf");
+  src: url("./assets/bevietnam/BeVietnamPro-SemiBold.ttf");
   /* IE9 Compat Modes */
 }
 
+@font-face {
+  font-family: myFirstFont;
+  src: url("./assets/bevietnam/BeVietnamPro-Bold.ttf");
+  font-weight: bold;
+  /* IE9 Compat Modes */
+}
 :root {
-  --fontColor: #E38E74;
+  --fontColor: #8E8585;
   --white: white;
   --black: black;
 }
