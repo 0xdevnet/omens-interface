@@ -1,11 +1,17 @@
 @font-face {
   font-family: myFirstFont;
-  src: url("./assets/bevietnam/BeVietnamPro-Regular.ttf");
+  src: url("./assets/bevietnam/BeVietnamPro-SemiBold.ttf");
   /* IE9 Compat Modes */
 }
 
+@font-face {
+  font-family: myFirstFont;
+  src: url("./assets/bevietnam/BeVietnamPro-Bold.ttf");
+  font-weight: bold;
+  /* IE9 Compat Modes */
+}
 :root {
-  --fontColor: #E38E74;
+  --fontColor: #8E8585;
   --white: white;
   --black: black;
 }
@@ -15,6 +21,21 @@
 }
 
 .App {
+  min-height: 100vh;
+}
+
+.App-Back {
   background: linear-gradient(rgb(83, 9, 9) 25%, rgba(70, 17, 0, 0.9) 44.33%, rgba(41, 20, 0, 0.9) 54.2%, rgb(0, 0, 0) 74.25%);
   min-height: 100vh;
+}
+
+.video {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background: transparent;
 }

@@ -20,7 +20,7 @@
 
     .paragraph {
         text-align: center;
-        font-style: italic;
+        font-style: bold;
         font-weight: 500;
         font-size: 30.1834px;
         line-height: 40px;
@@ -55,9 +55,10 @@
 }
 
 .bottomContainer {
-    width: 90%;
+    width: 100%;
     margin: auto;
-  
+    position: absolute;
+    bottom: 50px;
 
     img {
         width: 100%;
@@ -71,8 +72,7 @@
 
         .text {
             font-size: 30.1834px;
-            position: absolute;
-            bottom: -16px;
+            color: #970000;
             font-weight: 400;
         }
     }
