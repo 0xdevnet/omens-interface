@@ -27,12 +27,17 @@
         margin: 50px 0px 0px 0px;
         padding: 0px 9%;
 
-        .bodyImg {
-            text-align: center;
+        .divVideo {
+            padding: 0 20%;
+
+            .dvideo {
+                text-align: center;
+                width: 100%;
+                border-radius: 50%;
+                border: 4px solid rgba(125, 14, 14, 0.74);
+            }
         }
-        .bodyImg img {
-            width: 60%;
-        }
+        
         .paragraph {
             font-style: normal;
             font-weight: 800;
@@ -64,23 +69,6 @@
 
     .footer {
         padding: 0px 15%;
-        .btn1 {
-            width: 100%;
-            padding: 20px 15%;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 49.2208px;
-
-            font-style: italic;
-            font-weight: 800;
-            font-size: 35px;
-            line-height: 33px;
-            text-align: center;
-            letter-spacing: -0.045em;
-
-            color: #E38E74;
-
-            text-shadow: 0px 4.37519px 4.37519px rgba(0, 0, 0, 0.5);
-        }
 
         .gridItem {
             text-align: center;

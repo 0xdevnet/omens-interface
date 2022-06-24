@@ -1,24 +1,19 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
+
+import { Grid, AppBar, Box, Toolbar, IconButton, Container, Button } from '@material-ui/core';
+import { Menu as MenuIcon } from "@material-ui/icons";
 
 import Style from "./navbar.module.scss";
 import logo from "../../../../assets/images/logo.svg";
 import { ReactComponent as TwitterIcon } from "../../../../assets/images/Twitter.svg";
 import { ReactComponent as DiscordIcon } from "../../../../assets/images/Discord.svg";
-import { ReactComponent as VectorIcon } from "../../../../assets/images/Vector.svg";
+// import { ReactComponent as VectorIcon } from "../../../../assets/images/Vector.svg";
 import { ReactComponent as CrossIcon } from "../../../../assets/images/cross.svg";
 
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { useWallet } from "@solana/wallet-adapter-react";
+// import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-material-ui";
 
 const pagesList = [
@@ -38,7 +33,7 @@ const Navbar = ({
   const [isMenueOpen, setIsMenuOpen] = useState(false);
   const [pages, setPages] = useState([...pagesList]);
   const [currentActive, setCurrentActive] = useState(0);
-  const { publicKey } = useWallet();
+  // const { publicKey } = useWallet();
 
   let navigate = useNavigate();
   let location = useLocation;
@@ -89,7 +84,6 @@ const Navbar = ({
                     {index != 0 && <div className={Style.navDot}></div>}
                     <Button
                       onClick={() => handleRouting(index)}
-                      sx={{ color: "#E38E74", display: "block" }}
                       className={Style.navItem}
                     >
                       {page.title}
@@ -124,7 +118,6 @@ const Navbar = ({
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
               <IconButton
-                size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
+import { Button, CircularProgress } from '@material-ui/core';
+
 import { CandyMachineAccount } from './candy-machine';
-import { CircularProgress } from '@material-ui/core';
 import { GatewayStatus, useGateway } from '@civic/solana-gateway-react';
 import { useEffect, useState, useRef } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
@@ -11,6 +11,8 @@ import {
   onGatewayTokenChange,
   removeAccountChangeListener,
 } from '@identity.com/solana-gateway-ts';
+import { ReactComponent as Burning1901 } from "../../../../assets/images/1901-burning.svg";
+import Style from "./tickets.module.scss";
 
 export const CTAButton = styled(Button)`
   width: 100%;
@@ -20,6 +22,8 @@ export const CTAButton = styled(Button)`
   color: #C51F15 !important;
   font-size: 16px;
   font-weight: bold;
+  z-index: 99;
+  box-shadow: none !important;
 `; // add your own styles here
 
 export const MintButton = ({
@@ -155,7 +159,10 @@ export const MintButton = ({
       }}
       variant="contained"
     >
-      {getMintButtonContent()}
+      <div>
+        <div>{getMintButtonContent()}</div>
+        <Burning1901 className={Style.Burning1901} />
+      </div>
     </CTAButton>
   );
 };

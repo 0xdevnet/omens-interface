@@ -2,11 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import * as anchor from '@project-serum/anchor';
 
 import styled from 'styled-components';
-import { Container, Snackbar } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import Alert from '@material-ui/lab/Alert';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+
+import { Grid, Typography, Snackbar } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+
 import {
   Commitment,
   Connection,
@@ -14,7 +13,7 @@ import {
   Transaction,
 } from '@solana/web3.js';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletDialogButton } from '@solana/wallet-adapter-material-ui';
+// import { WalletDialogButton } from '@solana/wallet-adapter-material-ui';
 import {
   awaitTransactionSignatureConfirmation,
   CANDY_MACHINE_PROGRAM,
@@ -26,28 +25,25 @@ import {
   SetupState,
 } from './candy-machine';
 import { AlertState, formatNumber, getAtaForMint, toDate } from './utils';
-import { MintCountdown } from './MintCountdown';
 import { MintButton } from './MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
 import { sendTransaction } from '../../../../connection';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 
 import backgroundVideo from "../../../../assets/videos/ticketreal.mp4";
-import optigif from "../../../../assets/images/optigif.png";
-import { ReactComponent as Burning1901 } from "../../../../assets/images/1901-burning.svg";
 
 import Style from "./tickets.module.scss";
 
-const ConnectButton = styled(WalletDialogButton)`
-  width: 100%;
-  height: 60px;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  background: linear-gradient(180deg, #604ae5 0%, #813eee 100%);
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-`;
+// const ConnectButton = styled(WalletDialogButton)`
+//   width: 100%;
+//   height: 60px;
+//   margin-top: 10px;
+//   margin-bottom: 5px;
+//   background: linear-gradient(180deg, #604ae5 0%, #813eee 100%);
+//   color: white;
+//   font-size: 16px;
+//   font-weight: bold;
+// `;
 
 const MintContainer = styled.div``; // add your owns styles here
 
@@ -441,28 +437,28 @@ const Tickets = (props: TicketsProps) => {
     }
   };
 
-  const toggleMintButton = () => {
-    let active = !isActive || isPresale;
+  // const toggleMintButton = () => {
+  //   let active = !isActive || isPresale;
 
-    if (active) {
-      if (candyMachine!.state.isWhitelistOnly && !isWhitelistUser) {
-        active = false;
-      }
-      if (endDate && Date.now() >= endDate.getTime()) {
-        active = false;
-      }
-    }
+  //   if (active) {
+  //     if (candyMachine!.state.isWhitelistOnly && !isWhitelistUser) {
+  //       active = false;
+  //     }
+  //     if (endDate && Date.now() >= endDate.getTime()) {
+  //       active = false;
+  //     }
+  //   }
 
-    if (
-      isPresale &&
-      candyMachine!.state.goLiveDate &&
-      candyMachine!.state.goLiveDate.toNumber() <= new Date().getTime() / 1000
-    ) {
-      setIsPresale((candyMachine!.state.isPresale = false));
-    }
+  //   if (
+  //     isPresale &&
+  //     candyMachine!.state.goLiveDate &&
+  //     candyMachine!.state.goLiveDate.toNumber() <= new Date().getTime() / 1000
+  //   ) {
+  //     setIsPresale((candyMachine!.state.isPresale = false));
+  //   }
 
-    setIsActive((candyMachine!.state.isActive = active));
-  };
+  //   setIsActive((candyMachine!.state.isActive = active));
+  // };
 
   useEffect(() => {
     refreshCandyMachineState();
@@ -484,9 +480,6 @@ const Tickets = (props: TicketsProps) => {
 
   return (
     <>
-      <video autoPlay loop muted id="video" className={Style.video}>
-        <source src={backgroundVideo} type="video/mp4" />
-      </video>
       <div className={`${Style.mainContainer}  `}>
         <div className={Style.header}>
           <p className={Style.title}>
@@ -495,8 +488,10 @@ const Tickets = (props: TicketsProps) => {
         </div>
 
         <div className={Style.body}>
-          <div className={Style.bodyImg}>
-            <img src={optigif} />
+          <div className={Style.divVideo}>
+            <video autoPlay loop muted id="video" className={Style.dvideo}>
+              <source src={backgroundVideo} type="video/mp4" />
+            </video>
           </div>
 
           <div style={{marginTop: "20px", padding: "30px"}}>
@@ -644,7 +639,7 @@ const Tickets = (props: TicketsProps) => {
                         />
                       )}
                     </MintContainer>
-                    <Burning1901 className={Style.Burning1901}/>
+                    {/* <Burning1901 className={Style.Burning1901}/> */}
                   </Grid>
 
                   <Grid item xs={4} className={Style.gridItem}>
@@ -681,23 +676,23 @@ const Tickets = (props: TicketsProps) => {
   );
 };
 
-const getCountdownDate = (
-  candyMachine: CandyMachineAccount,
-): Date | undefined => {
-  if (
-    candyMachine.state.isActive &&
-    candyMachine.state.endSettings?.endSettingType.date
-  ) {
-    return toDate(candyMachine.state.endSettings.number);
-  }
+// const getCountdownDate = (
+//   candyMachine: CandyMachineAccount,
+// ): Date | undefined => {
+//   if (
+//     candyMachine.state.isActive &&
+//     candyMachine.state.endSettings?.endSettingType.date
+//   ) {
+//     return toDate(candyMachine.state.endSettings.number);
+//   }
 
-  return toDate(
-    candyMachine.state.goLiveDate
-      ? candyMachine.state.goLiveDate
-      : candyMachine.state.isPresale
-      ? new anchor.BN(new Date().getTime() / 1000)
-      : undefined,
-  );
-};
+//   return toDate(
+//     candyMachine.state.goLiveDate
+//       ? candyMachine.state.goLiveDate
+//       : candyMachine.state.isPresale
+//       ? new anchor.BN(new Date().getTime() / 1000)
+//       : undefined,
+//   );
+// };
 
 export default Tickets;

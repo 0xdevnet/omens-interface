@@ -62,11 +62,11 @@ const App = () => {
     []
   );
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
-  const [sPathName, setPathName] = useState("/");
+  // const [sPathName, setPathName] = useState("/");
 
   const handleMobileNavbar = (value: boolean, pathname: string) => {
     setIsMobileNavbarOpen(value);
-    setPathName(pathname);
+    // setPathName(pathname);
   };
 
   return (
