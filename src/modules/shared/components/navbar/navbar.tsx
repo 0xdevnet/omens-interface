@@ -8,6 +8,7 @@ import {
   IconButton,
   Container,
   Button,
+  Link
 } from "@material-ui/core";
 import { Menu as MenuIcon } from "@material-ui/icons";
 
@@ -25,7 +26,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { WalletMultiButton } from "@solana/wallet-adapter-material-ui";
 
 const pagesList = [
-  { title: "DIGSITES", acitveItem: true, route: "/" },
+  { title: "DIGSITES", acitveItem: true, route: "https://dig.omens.art/ " },
   { title: "CUSTOMIZATION", acitveItem: false, route: "/customization" },
   { title: "MARKETPLACE", acitveItem: false, route: "/marketplace" },
   { title: "UNDERWORLD", acitveItem: false, route: "/underworld" },
@@ -90,12 +91,26 @@ const Navbar = ({
                 {pages.map((page, index) => (
                   <div className="d-flex justify-content-center" key={index}>
                     {index != 0 && <div className={Style.navDot}></div>}
-                    <Button
-                      onClick={() => handleRouting(index)}
-                      className={Style.navItem}
-                    >
-                      {page.title}
-                    </Button>
+                    {index == 0 && 
+                      <Link
+                        href="https://dig.omens.art"
+                        className={`${Style.navItem} ${
+                          page.acitveItem ? Style.selectedItem : ""
+                        }`}
+                      >
+                        {page.title}
+                      </Link>
+                    }
+                    {index != 0 && 
+                      <Link
+                        onClick={() => handleRouting(index)}
+                        className={`${Style.navItem} ${
+                          page.acitveItem ? Style.selectedItem : ""
+                        }`}
+                      >
+                        {page.title}
+                      </Link>
+                    }
                   </div>
                 ))}
               </Grid>
@@ -144,15 +159,18 @@ const Navbar = ({
             <div>
               {pages.map((item, index) => {
                 return (
-                  <div>
-                    <a
-                      onClick={() => handleRouting(index)}
-                      className={`d-flex align-items-center ${Style.item} ${
-                        item.acitveItem ? Style.selectedItem : ""
-                      }`}
-                    >
-                      {item.title}
-                    </a>
+                  <div key={index}>
+                    {index == 0 && <Link href="https://dig.omens.art" className={`d-flex align-items-center ${Style.item} ${item.acitveItem ? Style.selectedItem : ""}`}>{item.title}</Link>}
+                    {index != 0 && 
+                      <Link
+                        onClick={() => handleRouting(index)}
+                        className={`d-flex align-items-center ${Style.item} ${
+                          item.acitveItem ? Style.selectedItem : ""
+                        }`}
+                      >
+                        {item.title}
+                      </Link>
+                    }
                   </div>
                 );
               })}

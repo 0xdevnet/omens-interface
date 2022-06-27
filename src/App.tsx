@@ -23,7 +23,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./modules/shared/components/navbar/navbar";
 import Marketplace from "./modules/home/components/marketplace/marketplace";
 import Customization from "./modules/home/components/customization/customization";
-import Digsites from "./modules/home/components/digsites/digsites";
 import Tickets from "./modules/home/components/tickets/tickets";
 
 import backgroundVideo from "./assets/videos/omensbg_1.mp4";
@@ -81,7 +80,6 @@ const App = () => {
             {!isMobileNavbarOpen && (
               <>
                 <Routes>
-                  <Route path="/" element={<Digsites />} />
                   <Route path="/marketplace" element={<Marketplace />} />
                   <Route path="/customization" element={<Customization />} />
                   <Route

@@ -89,14 +89,18 @@
         &:hover {
             color: var(--white);
             background-color: transparent !important;
+            text-decoration: none;
         }
+    }
+    .selectedItem {
+        // color: var(--white);
     }
     .navDot {
         width: 8px;
         height: 8px;
         border-radius: 50%;
         background: #970000;
-        margin-top: 18px;
+        margin: 12px;
     }
 }
 
